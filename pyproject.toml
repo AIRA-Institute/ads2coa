@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ads2coa"
+version = "0.1.0"
+description = "Generates the NSF COA from the author affiliations csv file"
+authors = ["Josh Bloom <joshbloom@berkeley.edu>"]
+license = "3-Clause BSD"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openpyxl = "^3.1.2"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+ads2coa = 'ads2coa.ads2coa:main'
