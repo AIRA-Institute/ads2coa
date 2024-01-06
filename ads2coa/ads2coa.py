@@ -7,20 +7,23 @@ This script generates the NSF COA from the author affiliations csv file.
 Steps:
  - Get the author affiliations csv file from ADS and save
    it locally as `authorAffiliations.csv`.
-   
+
  - Get the unadulterated NSF COA template from the NSF website:
 https://www.nsf.gov/bfa/dias/policy/coa/coa_template.xlsx
 
  - Run this script:
     python ads2coa.py -o lastname_coa.xlsx
 
- - Edit the generated file and save it as lastname_coa.xlsx 
+ - Edit the generated file and save it as lastname_coa.xlsx
 """
 
 from copy import copy
 import pandas as pd
 from pathlib import Path
 from argparse import ArgumentParser
+import os
+import urllib.request
+import sys
 
 from openpyxl import load_workbook
 from openpyxl.utils import rows_from_range
@@ -32,6 +35,7 @@ TABLE4_TEMPLATE_PERSON = "Alphaman, Lin"
 DEFAULT_TEMPLATE_FILENAME = "coa_template.xlsx"
 DEFAULT_AUTHOR_AFFILIATIONS_FILENAME = "authorAffiliations.csv"
 NUMBER_OF_EXISTING_ROWS_IN_TABLE4 = 5
+NSF_TEMPLATE_URL = "https://www.nsf.gov/bfa/dias/policy/coa/coa_template.xlsx"
 
 
 def copy_range(range_str, sheet, offset):
@@ -78,6 +82,14 @@ class COA:
         dirname : str
             Directory name
         """
+
+        if not os.path.exists(template_filename):
+            if template_filename == DEFAULT_TEMPLATE_FILENAME:
+                print(f"🤔 Could not find `{template_filename}`; downloading default NSF template")
+                response = urllib.request.urlretrieve(NSF_TEMPLATE_URL, DEFAULT_TEMPLATE_FILENAME)
+            else:
+                print(f"🤔 Could not find template `{template_filename}`")
+                sys.exit(-1)
 
         self.wb = load_workbook(template_filename)
         self.wb_alt = load_workbook(template_filename)

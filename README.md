@@ -14,9 +14,6 @@ pip install git+https://github.com/AIRA-Institute/ads2coa.git#egg=ads2coa
    [ADS](https://ui.adsabs.harvard.edu/) and save it locally as
    `authorAffiliations.csv`.
 
- - Get the unadulterated NSF COA template from the
-   [NSF website](https://www.nsf.gov/bfa/dias/policy/coa/coa_template.xlsx).
-
  - Run this script (see `--help` for arguments):
 
    ```bash
